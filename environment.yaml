@@ -1,0 +1,23 @@
+name: toy-bald
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.13
+  - pip
+  - numpy>=1.26,<2.3
+  - scipy>=1.11
+  - hydra-core>=1.3
+  - pydantic>=2.6
+  - ipykernel
+  - ipywidgets>=8.1
+  - pytest>=7.4
+  - pytest-repeat>=0.9.4
+  - pytest-cov>=5.0
+  - hypothesis>=6.100
+  - ruff>=0.4
+  - pyright>=1.1.360
+  - pip:
+      - --index-url https://download.pytorch.org/whl/cu126
+      - torch>=2.9,<2.10

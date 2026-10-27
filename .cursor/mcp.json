@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "agentDebug": {
+      "type": "stdio",
+      "command": "conda",
+      "args": [
+        "run",
+        "-n",
+        "e2e-rag",
+        "--no-capture-output",
+        "--cwd",
+        "${workspaceFolder}",
+        "mcp-debug-server"
+      ]
+    }
+  }
+}

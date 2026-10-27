@@ -1,0 +1,37 @@
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+.eggs/
+.python-version
+.venv/
+.env
+
+# --- Build outputs --------------------------------------------------------
+build/
+dist/
+*.so
+
+# --- Test / coverage ------------------------------------------------------
+.pytest_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+
+# ---  artifacts -----------------------------
+outputs/
+!outputs/.gitkeep
+
+# --- IDEs -----------------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+
+# --- OS -------------------------------------------------------------------
+.DS_Store
+Thumbs.db
