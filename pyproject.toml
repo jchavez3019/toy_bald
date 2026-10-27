@@ -1,0 +1,85 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "toy-bald"
+version = "0.1.0"
+description = "Toy experiments with BALD (Bayesian Active Learning by Disagreement."
+requires-python = ">=3.13"
+
+# Dependency resolution is conda's responsibility (see environment.yaml).
+# These are declared for editable installs / metadata only.
+dependencies = [
+    "accelerate>=1.14.0",
+    "datasets>=5.1.0",
+    "defusedxml",
+    "Faker>=40.37.0",
+    "Jinja2",
+    "matplotlib>=3.11.1",
+    "nbconvert>=7",
+    "numpy>=1.26",
+    "opencv-python>=5.0.0.93",
+    "openai",
+    "scipy>=1.11",
+    "scipy-stubs>=1.18.1.1",
+    "prettytable>=3.18.0",
+    "pydantic>=2.6",
+    "python-dotenv",
+    "hydra-core>=1.3",
+    "peft>=0.15",
+    "tqdm>=4.66",
+    "transformers>=5.15",
+    # The CUDA-enabled build is provisioned by environment.yaml's pip block
+    # from https://download.pytorch.org/whl/cu126. The >=2.9 floor is what makes
+    # torch.optim.Muon available (introduced in 2.9.0); transformers>=5.15 only
+    # requires torch>=2.5. Do not install this from PyPI directly or you will
+    # get a CPU-only wheel.
+    "torch>=2.9,<2.10"
+]
+
+[project.optional-dependencies]
+# Opt-in agent debugging over MCP (debugpy + Debug Adapter Protocol) via the public fork of
+# mcp-debugpy. Install with `pip install -e '.[debug]'`; see README "Optional: agent debugging".
+debug = [
+    "mcp-debugpy @ git+https://github.com/jchavez3019/mcp-debugpy@main",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+toy_bald = [
+    "py.typed",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+#src = ["src", "training", "evaluation", "tests"]
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = [
+    # Long lines occur in tensor-shape comments; the formatter handles code width.
+    "E501",
+]
+
+[tool.pyright]
+#include = ["src", "training", "evaluation", "tests"]
+include = ["src", "tests"]
+extraPaths = ["src"]
+typeCheckingMode = "strict"
+pythonVersion = "3.13"
+reportMissingTypeStubs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+    "gpu: requires a CUDA device",
+    "slow: long-running training or evaluation jobs",
+    "live: hits a real LLM endpoint; opt-in via -m live, never in CI",
+]
+addopts = "-m 'not gpu and not slow and not live'"
